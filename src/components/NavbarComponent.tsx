@@ -1,8 +1,13 @@
 import { useState } from "react";
 import { nav } from "../assets/data/index";
 import { Link } from "react-router-dom";
+import { BiMenu } from "react-icons/bi";
 
-function NavbarComponent() {
+interface darkModeType {
+  darkMode: Boolean;
+}
+
+function NavbarComponent({ darkMode }: darkModeType) {
   const [menu, setMenu] = useState(false);
 
   const buttonMenu = () => {
@@ -11,18 +16,30 @@ function NavbarComponent() {
 
   return (
     <>
-      <nav className="fixed w-full flex justify-between items-center px-6 py-6 backdrop-blur bg-gray-50 dark:bg-gray-950 z-50">
+      <nav className="fixed w-full flex justify-between items-center px-6 py-6 z-50">
         <section>
-          <Link to={"/"} className="dark:text-gray-50 font-bold">
+          <Link to={"/"} className="dark:text-gray-50 font-bold text-2xl">
             MhmdRizky
           </Link>
         </section>
-        <section className="hidden sm:flex gap-5 items-center">
+        <button onClick={buttonMenu} className="flex sm:hidden">
+          <BiMenu
+            className={`${darkMode ? "text-gray-50" : "text-gray-900"}`}
+            size={30}
+          />
+        </button>
+      </nav>
+      <aside
+        className={`fixed min-h-svh w-full bg-gray-100 dark:bg-gray-900 transition-all z-40 ${
+          menu ? "-translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <section className="pt-20 flex flex-col items-center gap-5 text-xl">
           {nav.map((item) => {
             return (
               <nav
                 key={item.id}
-                className="dark:text-gray-50 flex items-center"
+                className=" dark:text-gray-50 flex items-center"
               >
                 <Link to={item.path} className="flex items-center">
                   {item.name}
@@ -31,29 +48,6 @@ function NavbarComponent() {
             );
           })}
         </section>
-        <button onClick={buttonMenu} className="flex sm:hidden">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
-            />
-          </svg>
-        </button>
-      </nav>
-      <aside
-        className={`fixed min-h-svh w-full bg-gray-100 transition-all z-40 ${
-          menu ? "-translate-x-0" : "translate-x-full"
-        }`}
-      >
-        test
       </aside>
     </>
   );

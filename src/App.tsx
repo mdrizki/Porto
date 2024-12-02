@@ -4,6 +4,8 @@ import HomePage from "./pages/HomePage";
 import NavbarComponent from "./components/NavbarComponent";
 import SwitcherDarkMode from "./components/SwitcherDarkMode";
 import ProjectPage from "./pages/ProjectPage";
+import AboutPage from "./pages/AboutPage";
+import FooterComponent from "./components/FooterComponent";
 
 function App() {
   const [darkMode, setDarkMode] = useState(
@@ -23,12 +25,14 @@ function App() {
 
   return (
     <>
-      <NavbarComponent />
+      <NavbarComponent darkMode={darkMode} />
       <Routes>
         <Route path="/" Component={HomePage} />
         <Route path="/project" Component={ProjectPage} />
+        <Route path="/about" Component={AboutPage} />
       </Routes>
       <SwitcherDarkMode darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      <FooterComponent />
     </>
   );
 }
